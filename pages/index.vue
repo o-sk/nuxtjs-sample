@@ -17,10 +17,18 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { awaitExpression } from 'babel-types';
+
 export default {
-  async asyncData({ app }) {
-    const items = await app.$axios.$get('https://qiita.com/api/v2/items?query=tag:vue.js')
-    return { items }
+  async asyncData({ store }) {
+    if (store.getters['items'].length) {
+      return
+    }
+    await store.dispatch('fetchItems')
+  },
+  computed: {
+    ...mapGetters(["items"])
   }
 }
 </script>

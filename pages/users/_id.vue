@@ -27,6 +27,25 @@ export default {
     const user = await app.$axios.$get(`https://qiita.com/api/v2/users/${route.params.id}`)
     const items = await app.$axios.$get(`https://qiita.com/api/v2/items?query=user:${route.params.id}`)
     return { user, items }
+  },
+  async asyncData({ route, store, redirect }) {
+    if (store.getters['users'][route.params.id].length) {
+      return
+    }
+    try {
+      await store.dispatch('fetchUserInfo', { id: route.params.id })
+    } catch (e) {
+      redirect("/")
+    }
+  },
+  computed: {
+    user() {
+      return this.users[this.$route.params.id]
+    },
+    items() {
+      return this.userItems[this.$route.params.id]
+    },
+    ...mapGetters(["users", "userItems"])
   }
 }
 </script>
