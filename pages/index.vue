@@ -25,7 +25,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
 .container {
   min-height: 100vh;
   padding: 20px;
@@ -37,21 +37,22 @@ h1 {
   margin-bottom: 25px;
 }
 
-li.post {
+.post {
   margin-bottom: 15px;
-}
 
-h2 span {
-  font-size: 20px;
-}
+  h2 {
+    span {
+      font-size: 20px;
 
-h2 span.posted {
-  margin-left: 10px;
-  font-size: 16px;
-}
+      &.posted {
+        margin-left: 10px;
+        font-size: 16px;
 
-h2 span.posted a {
-  margin-left: 5px;
+        a {
+          margin-left: 5px;
+        }
+      }
+    }
+  }
 }
-
 </style>
