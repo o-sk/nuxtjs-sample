@@ -1,5 +1,44 @@
 <template lang="pug">
-  div
-    p
-      | /users/_id.vue
+  section.container
+    div
+      h1 {{ user.id }}
+      img(:src="user.profile_image_url" width="120" alt="")
+      p {{ user.description || "No description" }}
+      nuxt-link(to="/") トップに戻る
+
+      h2 {{ user.id}}'s posts
+      ul
+        li.post(v-for="item in items" :key="item.id")
+          h3 {{ item.title }}
+          div {{ item.body.slice(0, 130) }}...
+          p
+            a(:href="item.url") {{ item.url }}
+
 </template>
+
+<script>
+export default {
+  async asyncData({ route, app }) {
+    const user = await app.$axios.$get(`https://qiita.com/api/v2/users/${route.params.id}`)
+    const items = await app.$axios.$get(`https://qiita.com/api/v2/items?query=user:${route.params.id}`)
+    return { user, items }
+  }
+}
+</script>
+
+<style lang="less">
+.container {
+  min-height: 100vh;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 24px;
+  border-bottom: solid 1px #eeeeee;
+  margin-bottom: 25px;
+}
+
+.post {
+  margin-bottom: 15px;
+}
+</style>
