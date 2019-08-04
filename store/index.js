@@ -29,8 +29,8 @@ export default () => (new Vuex.Store({
     },
     async fetchUserInfo({ commit }, { id }) {
       const [user, items] = await Promise.all([
-        this.$axios.$get(`https://qiita.com/api/v2/users/${route.params.id}`),
-        this.$axios.$get(`https://qiita.com/api/v2/items?query=user:${route.params.id}`)
+        this.$axios.$get(`https://qiita.com/api/v2/users/${id}`),
+        this.$axios.$get(`https://qiita.com/api/v2/items?query=user:${id}`)
       ])
       commit('setUser', { user })
       commit('setUserItems', { user, items })

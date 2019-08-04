@@ -17,19 +17,17 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { awaitExpression } from 'babel-types';
+
 export default {
   head() {
     return {
       title: `${this.user.id}'s page`
     }
   },
-  async asyncData({ route, app }) {
-    const user = await app.$axios.$get(`https://qiita.com/api/v2/users/${route.params.id}`)
-    const items = await app.$axios.$get(`https://qiita.com/api/v2/items?query=user:${route.params.id}`)
-    return { user, items }
-  },
   async asyncData({ route, store, redirect }) {
-    if (store.getters['users'][route.params.id].length) {
+    if (store.getters['users'][route.params.id]) {
       return
     }
     try {
